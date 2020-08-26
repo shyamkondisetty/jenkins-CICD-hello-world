@@ -9,6 +9,7 @@ pipeline {
         REGISTRY_CREDENTIAL = 'githubcredentials'
     }
     agent any
+
     stages {
         stage('Checkout from github') {
             steps {
@@ -24,10 +25,8 @@ pipeline {
         }
         stage('Docker Build') {
              steps {
-                container('docker') {
-                    sh "docker build -t image ."
-                    sh "docker tag image ${IMAGE_ID}:${VERSION}"
-                }
+                sh "docker build -t image ."
+                sh "docker tag image ${IMAGE_ID}:${VERSION}"
              }
         }
         stage('Docker Publish') {
