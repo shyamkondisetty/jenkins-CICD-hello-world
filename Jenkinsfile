@@ -3,6 +3,7 @@ node {
   def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
   withEnv(["DOCKER=${dockerTool}/bin"]) {
     stage('Checkout') {
+      sh 'systemctl start docker'
       checkout scm
     }
     stage('Build') {
