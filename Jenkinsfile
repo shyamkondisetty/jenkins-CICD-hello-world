@@ -14,7 +14,7 @@ pipeline {
             steps {
                 git branch: 'master',
                     credentialsId: '${REGISTRY_CREDENTIAL}',
-                    url: 'git@github.com:shyamkondisetty/jenkins-CICD-hello-world.git'
+                    url: 'https://github.com/shyamkondisetty/jenkins-CICD-hello-world.git'
             }
         }
         stage('Build') {
