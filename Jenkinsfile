@@ -31,10 +31,8 @@ pipeline {
         }
         stage('Docker Publish') {
              steps {
-                container('docker') {
-                    withDockerRegistry([credentialsId: "${REGISTRY_CREDENTIAL}", url: "git@github.com:shyamkondisetty/jenkins-CICD-hello-world.git"]) {
-                        sh "docker push ${IMAGE_ID}:${VERSION}"
-                    }
+                withDockerRegistry([credentialsId: "${REGISTRY_CREDENTIAL}", url: "git@github.com:shyamkondisetty/jenkins-CICD-hello-world.git"]) {
+                    sh "docker push ${IMAGE_ID}:${VERSION}"
                 }
              }
         }
