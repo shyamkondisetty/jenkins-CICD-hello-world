@@ -8,7 +8,11 @@ pipeline {
         IMAGE_ID= 'docker.pkg.github.com/shyamkondisetty/jenkins-CICD-hello-world/helloworld'
         REGISTRY_CREDENTIAL = 'githubcredentials'
     }
-    agent any
+    agent {
+        node {
+            label 'docker'
+        }
+    }
 
     stages {
         stage('Checkout from github') {
