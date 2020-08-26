@@ -11,6 +11,7 @@ node {
   }
   stage('Build') {
     sh './gradlew clean build'
+    dockerCmd 'images'
   }
 }
 
