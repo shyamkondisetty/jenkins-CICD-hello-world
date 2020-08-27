@@ -36,7 +36,12 @@ podTemplate(
             container ('docker') {
 //                 def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
 //                 repository = "${registryIp}:80/hello"
+                sh "docker build -t image ."
+                sh "docker tag image docker.pkg.github.com/shyamkondisetty/jenkins-CICD-hello-world/helloworld:1.0"
                 sh "docker images"
+                withDockerRegistry([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
+                    sh "docker push docker.pkg.github.com/shyamkondisetty/jenkins-CICD-hello-world/helloworld:1.0"
+                }
 //                 sh "docker push ${repository}:${commitId}"
             }
         }
