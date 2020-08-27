@@ -7,7 +7,7 @@ node {
     }
     stage('Build') {
 //      sh './gradlew clean build'
-      docker.withRegistry('https://docker.pkg.github.com/shyamkondisetty/jenkins-CICD-hello-world', 'githubcredentials') {
+      docker.withRegistry('https://docker.pkg.github.com', 'githubcredentials') {
 //        docker.build('helloworld').push('1.0')
       }
 //      dockerCmd 'version'
