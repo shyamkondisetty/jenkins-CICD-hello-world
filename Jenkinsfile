@@ -7,7 +7,12 @@ node {
     }
     stage('Build') {
       sh './gradlew clean build'
-      dockerCmd 'version'
+      docker.withRegistry('https://docker.mycorp.com/') {
+        // or docker.build, etc.
+        sh "docker images"
+        // runs: docker pull --all-tags docker.mycorp.com/myImg
+      }
+//      dockerCmd 'version'
     }
   }
 }
