@@ -49,7 +49,7 @@ podTemplate(
                     credentialsId: 'githubcredentials',
                     url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
                 sh "ls -a"
-                sh "helm --help"
+                sh "helm version"
 //                 sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelm helloworldhelm"
             }
         }
