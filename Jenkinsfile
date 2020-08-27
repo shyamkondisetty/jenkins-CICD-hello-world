@@ -7,10 +7,8 @@ node {
     }
     stage('Build') {
       sh './gradlew clean build'
-      docker.withRegistry('https://docker.mycorp.com/') {
-        // or docker.build, etc.
-        sh "docker images"
-        // runs: docker pull --all-tags docker.mycorp.com/myImg
+      docker.withRegistry('docker.pkg.github.com/shyamkondisetty/jenkins-CICD-hello-world', 'githubcredentials') {
+        docker.build('myapp').push('latest')
       }
 //      dockerCmd 'version'
     }
