@@ -8,12 +8,12 @@ podTemplate(
             ttyEnabled: true,
             command: 'cat'
         ),
-//         containerTemplate(
-//             name: 'helm',
-//             image: 'lachlanevenson/k8s-helm:3.0.3',
-//             ttyEnabled: true,
-//             command: 'cat'
-//         )
+        containerTemplate(
+            name: 'helm',
+            image: 'lachlanevenson/k8s-helm:v3.0.3',
+            ttyEnabled: true,
+            command: 'cat'
+        )
     ],
     volumes: [
         hostPathVolume(
