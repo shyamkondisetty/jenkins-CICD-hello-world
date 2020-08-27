@@ -7,7 +7,7 @@ node {
     }
     stage('Build') {
 //      sh './gradlew clean build'
-      docker.withRegistry('docker.pkg.github.com', 'githubcredentials') {
+      docker.withRegistry('https://docker.pkg.github.com', 'githubcredentials') {
 //        docker.build('helloworld').push('1.0')
       }
 //      dockerCmd 'version'
