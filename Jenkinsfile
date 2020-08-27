@@ -1,20 +1,52 @@
-#!groovy
-node {
-  def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-  withEnv(["DOCKER=${dockerTool}/bin"]) {
-    stage('Checkout') {
-      checkout scm
+podTemplate(
+    label: 'mypod',
+    inheritFrom: 'default',
+    containers: [
+        containerTemplate(
+            name: 'docker',
+            image: 'docker:18.02',
+            ttyEnabled: true,
+            command: 'cat'
+        ),
+        containerTemplate(
+            name: 'helm',
+            image: 'ibmcom/k8s-helm:v2.6.0',
+            ttyEnabled: true,
+            command: 'cat'
+        )
+    ],
+    volumes: [
+        hostPathVolume(
+            hostPath: '/var/run/docker.sock',
+            mountPath: '/var/run/docker.sock'
+        )
+    ]
+) {
+    node('mypod') {
+        def commitId
+        stage ('Extract') {
+            checkout scm
+//             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+        }
+//         stage ('Build') {
+//             container ('golang') {
+//                 sh 'CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .'
+//             }
+//         }
+        def repository
+        stage ('Docker') {
+            container ('docker') {
+//                 def registryIp = sh(script: 'getent hosts registry.kube-system | awk \'{ print $1 ; exit }\'', returnStdout: true).trim()
+//                 repository = "${registryIp}:80/hello"
+                sh "docker images"
+//                 sh "docker push ${repository}:${commitId}"
+            }
+        }
+//         stage ('Deploy') {
+//             container ('helm') {
+//                 sh "/helm init --client-only --skip-refresh"
+//                 sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${commitId} hello hello"
+//             }
+//         }
     }
-    stage('Build') {
-//      sh './gradlew clean build'
-//      docker.withRegistry('https://docker.pkg.github.com', 'githubcredentials') {
-////        docker.build('helloworld').push('1.0')
-//      }
-      dockerCmd 'images'
-    }
-  }
-}
-
-def dockerCmd(args) {
-  sh "${DOCKER}/docker ${args}"
 }
