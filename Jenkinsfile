@@ -29,9 +29,7 @@ podTemplate(
 //             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         }
         stage ('Build') {
-             steps {
-                sh './gradlew clean build'
-             }
+             sh './gradlew clean build'
         }
         def repository
         stage ('Docker') {
