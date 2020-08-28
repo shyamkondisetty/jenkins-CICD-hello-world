@@ -36,7 +36,7 @@ podTemplate(
             container ('docker') {
 //                 sh "docker build -t image ."
 //                 sh "docker tag image ${repository}:${version}"
-//                 sh "docker images"
+                sh "docker images"
 //                 withDockerRegistry([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
 //                     sh "docker push ${repository}:${version}"
 //                 }
