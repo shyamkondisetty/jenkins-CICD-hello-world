@@ -50,6 +50,7 @@ podTemplate(
                     url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
                 sh "ls -a"
                 sh "helm version"
+                sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
                 sh "helm install ngnix stable/ngnix"
 //                 sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelm helloworldhelm"
             }
