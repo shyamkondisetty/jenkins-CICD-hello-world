@@ -2,18 +2,7 @@ podTemplate(
     label: 'mypod',
     inheritFrom: 'default',
     containers: [
-        containerTemplate(
-            name: 'docker',
-            image: 'docker:18.02',
-            ttyEnabled: true,
-            command: 'cat'
-        ),
-        containerTemplate(
-            name: 'helm',
-            image: 'lachlanevenson/k8s-helm:v3.0.3',
-            ttyEnabled: true,
-            command: 'cat'
-        )
+
     ],
     volumes: [
         hostPathVolume(
