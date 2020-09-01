@@ -51,6 +51,7 @@ podTemplate(
                 sh "ls -a"
                 sh "helm version"
                 sh "helm repo add bitnami https://charts.bitnami.com/bitnami"
+                sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
                 sh "helm install nginx-ingress stable/nginx-ingress"
                 sh "helm list --all"
 //                 sh "helm install ngnix bitnami/nginx"
