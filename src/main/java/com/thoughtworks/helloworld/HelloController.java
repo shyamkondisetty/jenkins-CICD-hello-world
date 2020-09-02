@@ -12,6 +12,7 @@ public class HelloController {
     public String sayHello(String helloMessage){
         if(helloMessage==null){
             return "hello world:2.0";
-        return "hello         }\n"+helloMessage;
+        }
+        return "hello "+helloMessage;
     }
 }
