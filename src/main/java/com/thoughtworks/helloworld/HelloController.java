@@ -11,7 +11,7 @@ public class HelloController {
     @GetMapping
     public String sayHello(String helloMessage){
         if(helloMessage==null){
-            return "hello world:2.0";
+            return "hello world:4.0";
         }
         return "hello "+helloMessage;
     }

@@ -25,7 +25,7 @@ podTemplate(
 ) {
     node('mypod') {
 
-        def version = "3.0"
+        def version = "4.0"
         stage ('Extract') {
             checkout scm
 //             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -57,7 +57,7 @@ podTemplate(
                 sh "helm version"
                 sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
                 sh "helm list --all"
-                sh "helm -n jenkins upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelmchart helloworldhelmchart"
+                sh "helm -n apps upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelmchart helloworldhelmchart"
             }
         }
     }
