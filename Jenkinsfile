@@ -24,6 +24,7 @@ podTemplate(
     ]
 ) {
     node('mypod') {
+
         def version = "3.0"
         stage ('Extract') {
             checkout scm
