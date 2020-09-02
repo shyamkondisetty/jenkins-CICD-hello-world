@@ -24,7 +24,7 @@ podTemplate(
     ]
 ) {
     node('mypod') {
-        def version = "2.0"
+        def version = "3.0"
         stage ('Extract') {
             checkout scm
 //             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -38,7 +38,7 @@ podTemplate(
                 sh "docker build -t image ."
                 sh "docker tag image ${repository}:${version}"
                 sh "docker images"
-                withDockerRegistry([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
+                   ([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
                     sh "docker push ${repository}:${version}"
                 }
                 echo "${repository}:${version}"
@@ -46,13 +46,16 @@ podTemplate(
         }
         stage ('Deploy') {
             container ('helm') {
-//                 git branch: 'master',
-//                     credentialsId: 'githubcredentials',
-//                     url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
-//                 sh "ls -a"
+                dir("helloworldhelmchart") {
+                    git branch: 'master',
+                        credentialsId: 'githubcredentials',
+                        url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
+
+                }
+                sh "ls -a"
                 sh "helm version"
                 sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
-                sh "helm list -A"
+                sh "helm list --all"
                 sh "helm -n jenkins upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelmchart helloworldhelmchart"
             }
         }
