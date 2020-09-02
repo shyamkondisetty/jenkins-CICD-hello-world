@@ -20,16 +20,11 @@ podTemplate(
         hostPathVolume(
             hostPath: '/var/run/docker.sock',
             mountPath: '/var/run/docker.sock'
-        ),
-        hostPathVolume(
-            mountPath: '/usr/local/bin/helm',
-            hostPath: '/usr/local/bin/helm'
         )
-
     ]
 ) {
     node('mypod') {
-        def version = "1.0"
+        def version = "2.0"
         stage ('Extract') {
             checkout scm
 //             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -40,12 +35,12 @@ podTemplate(
         def repository = "docker.pkg.github.com/shyamkondisetty/jenkins-cicd-hello-world/helloworld"
         stage ('Docker') {
             container ('docker') {
-//                 sh "docker build -t image ."
-//                 sh "docker tag image ${repository}:${version}"
+                sh "docker build -t image ."
+                sh "docker tag image ${repository}:${version}"
                 sh "docker images"
-//                 withDockerRegistry([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
-//                     sh "docker push ${repository}:${version}"
-//                 }
+                withDockerRegistry([credentialsId: "githubcredentials", url: "https://docker.pkg.github.com"]) {
+                    sh "docker push ${repository}:${version}"
+                }
                 echo "${repository}:${version}"
             }
         }
@@ -58,10 +53,8 @@ podTemplate(
                 sh "helm version"
                 sh "helm repo add bitnami https://charts.bitnami.com/bitnami"
                 sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
-                sh "helm list --all"
-                sh "helm install nginx-ingress stable/nginx-ingress"
-//                 sh "helm install ngnix bitnami/nginx"
-//                 sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelm helloworldhelm"
+                sh "helm list -A"
+                sh "helm -n jenkins upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelmchart helloworldhelmchart"
             }
         }
     }
