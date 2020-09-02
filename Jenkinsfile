@@ -46,12 +46,11 @@ podTemplate(
         }
         stage ('Deploy') {
             container ('helm') {
-                git branch: 'master',
-                    credentialsId: 'githubcredentials',
-                    url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
-                sh "ls -a"
+//                 git branch: 'master',
+//                     credentialsId: 'githubcredentials',
+//                     url: 'https://github.com/shyamkondisetty/helloworldhelmchart.git'
+//                 sh "ls -a"
                 sh "helm version"
-                sh "helm repo add bitnami https://charts.bitnami.com/bitnami"
                 sh "helm repo add stable https://kubernetes-charts.storage.googleapis.com/"
                 sh "helm list -A"
                 sh "helm -n jenkins upgrade --install --wait --set image.repository=${repository},image.tag=${version} helloworldhelmchart helloworldhelmchart"
