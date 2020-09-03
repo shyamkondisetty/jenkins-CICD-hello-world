@@ -25,7 +25,7 @@ podTemplate(
 ) {
     node('mypod') {
 
-        def version = "4.0"
+        def version = "5.0"
         stage ('Extract') {
             checkout scm
 //             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
